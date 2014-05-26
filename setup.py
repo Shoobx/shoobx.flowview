@@ -45,7 +45,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            # 'flowview = flowview.cli:main',
+            'flowview = shoobx.flowview.cli:main',
         ],
     }
 )
