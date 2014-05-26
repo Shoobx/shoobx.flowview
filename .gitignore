@@ -1,0 +1,13 @@
+bin/
+develop-eggs/
+ve/
+parts/
+.installed.cfg
+bootstrap.py
+.coverage
+coverage
+htmlcov
+tmp/
+
+*.pyc
+src/*.egg-info
