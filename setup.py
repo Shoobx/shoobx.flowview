@@ -40,7 +40,8 @@ setup(
     extras_require=dict(
         test=['coverage', 'mock'],),
     install_requires=[
-        'setuptools'
+        'setuptools',
+        'lxml'
     ],
     entry_points={
         'console_scripts': [
