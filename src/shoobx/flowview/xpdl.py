@@ -3,16 +3,21 @@
 # Copyright 2014 by Shoobx, Inc.
 #
 ###############################################################################
-from lxml import etree
+import logging
 import pkg_resources
+
+from lxml import etree
+
+log = logging.getLogger(__name__)
 
 
 class ResourceResolver(etree.Resolver):
     prefix = "flowview:"
+
     def resolve(self, url, pubid, context):
         if url.startswith(self.prefix):
             fn = url[len(self.prefix):]
-            print "RESOLVING", fn
+            log.debug("Resolving resource %s", fn)
 
             res = pkg_resources.resource_stream("shoobx.flowview", fn)
             return self.resolve_file(res, context)
