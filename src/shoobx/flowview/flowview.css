@@ -1,0 +1,29 @@
+<style>
+.sidenav {
+  position: fixed;
+  right: 0;
+}
+.sidenav .nav {
+  font-size: smaller;
+}
+.sidenav .nav .nav {
+  font-size: 10px;
+  padding-left: 12pt;
+}
+.sidenav .nav li a {
+  padding: 0 0 0 6pt;
+  border-left: 2px solid transparent;
+}
+.sidenav .nav li ul.nav {
+  display: none
+}
+
+.sidenav .nav li.active ul.nav {
+  display: block;
+}
+
+.sidenav .nav .active > a {
+  border-left: 2px solid red;
+  font-weight: bold;
+}
+</style>

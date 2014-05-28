@@ -56,7 +56,7 @@
     <xsl:param name="target_act_id" />
     <xsl:param name="activities" />
     <a>
-      <xsl:attribute name="href">#<xsl:value-of select="$target_act_id" /></xsl:attribute>
+      <xsl:attribute name="href">#activity-<xsl:value-of select="$target_act_id" /></xsl:attribute>
       <xsl:value-of select="$activities[@Id=$target_act_id]/@Name" />
     </a>
   </xsl:template>
@@ -87,7 +87,7 @@
   <!-- Activity -->
   <xsl:template name="activity">
     <h3>
-      <xsl:attribute name="id"><xsl:value-of select="@Id" /></xsl:attribute>
+      <xsl:attribute name="id">activity-<xsl:value-of select="@Id" /></xsl:attribute>
       <xsl:value-of select="@Name" />
       <xsl:text> </xsl:text>
       <small> <xsl:value-of select="@Id" /></small>
@@ -102,7 +102,9 @@
 
   <!-- Process definition -->
   <xsl:template name="process">
-    <h2><xsl:value-of select="@Name" />
+    <h2>
+      <xsl:attribute name="id">process-<xsl:value-of select="@Id" /></xsl:attribute>
+      <xsl:value-of select="@Name" />
       <xsl:text> </xsl:text>
       <small> <xsl:value-of select="@Id" /></small>
     </h2>
@@ -114,6 +116,29 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="navigation">
+    <ul class="nav nav-list">
+      <xsl:for-each select="//xpdl:WorkflowProcesses/xpdl:WorkflowProcess">
+        <li>
+          <a>
+            <xsl:attribute name="href">#process-<xsl:value-of select="@Id" /></xsl:attribute>
+            <xsl:value-of select="@Name" />
+          </a>
+          <ul class="nav nav-list">
+            <xsl:for-each select="xpdl:Activities/xpdl:Activity">
+              <li>
+                <a>
+                  <xsl:attribute name="href">#activity-<xsl:value-of select="@Id" /></xsl:attribute>
+                  <xsl:value-of select="@Name" />
+                </a>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </li>
+      </xsl:for-each>
+    </ul>
+
+  </xsl:template>
 
   <xsl:include href="flowview:layout.xslt" />
 
@@ -124,6 +149,11 @@
           <xsl:call-template name="process" />
         </xsl:for-each>
       </xsl:with-param>
+
+      <xsl:with-param name="navigation">
+          <xsl:call-template name="navigation" />
+      </xsl:with-param>
+
     </xsl:call-template>
   </xsl:template>
 
