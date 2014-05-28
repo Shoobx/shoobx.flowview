@@ -255,7 +255,6 @@ metadata needed for a template and gives it a Title.</xpdl:Description>
             </xpdl:FormalParameters>
         </xpdl:Application>
         <xpdl:Application Id="manage_subflows" Name="Manage multiple sub-workflows">
-            <xpdl:Description/>
             <xpdl:FormalParameters>
                 <xpdl:FormalParameter Id="message_id" IsArray="false" Mode="IN" Name="Message Id">
                     <xpdl:DataType>
@@ -1109,11 +1108,13 @@ process is not started.</xpdl:Description>
                     <xpdl:DataType>
                         <xpdl:BasicType Type="STRING"/>
                     </xpdl:DataType>
+                    <xpdl:Description>Process name</xpdl:Description>
                 </xpdl:FormalParameter>
                 <xpdl:FormalParameter Id="parameters" IsArray="false" Mode="IN" Name="Process Parameters">
                     <xpdl:DataType>
                         <xpdl:BasicType Type="STRING"/>
                     </xpdl:DataType>
+                    <xpdl:Description>Process parameters as a dict</xpdl:Description>
                 </xpdl:FormalParameter>
                 <xpdl:FormalParameter Id="initial_performer_id" IsArray="false" Mode="IN" Name="Initial Performer Id">
                     <xpdl:DataType>
@@ -1782,6 +1783,7 @@ subflows are complete, the workitem itself can be completed as well.</xpdl:Descr
                     <xpdl:DataType>
                         <xpdl:BasicType Type="STRING"/>
                     </xpdl:DataType>
+                    <xpdl:Description>Officers Parameter Description</xpdl:Description>
                 </xpdl:FormalParameter>
             </xpdl:FormalParameters>
         </xpdl:Application>
