@@ -115,27 +115,16 @@
   </xsl:template>
 
 
-  <!-- Main rule for whole document -->
+  <xsl:include href="flowview:layout.xslt" />
+
   <xsl:template match="/">
-    <html>
-      <head>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">;</script>
-      </head>
-      <body>
-        <h1>Test</h1>
-
+    <xsl:call-template name="layout">
+      <xsl:with-param name="contents">
         <xsl:for-each select="//xpdl:WorkflowProcesses/xpdl:WorkflowProcess">
           <xsl:call-template name="process" />
         </xsl:for-each>
-      </body>
-    </html>
+      </xsl:with-param>
+    </xsl:call-template>
   </xsl:template>
 
 </xsl:stylesheet>
