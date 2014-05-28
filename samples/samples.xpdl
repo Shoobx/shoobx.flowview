@@ -2075,6 +2075,7 @@ newly created stakeholders.</xpdl:Description>
                     <xpdl:DataType>
                         <xpdl:BasicType Type="INTEGER"/>
                     </xpdl:DataType>
+                    <xpdl:InitialValue>230</xpdl:InitialValue>
                 </xpdl:FormalParameter>
             </xpdl:FormalParameters>
             <xpdl:DataFields>
@@ -2082,6 +2083,7 @@ newly created stakeholders.</xpdl:Description>
                     <xpdl:DataType>
                         <xpdl:BasicType Type="STRING"/>
                     </xpdl:DataType>
+                    <xpdl:Description>Task Ids Workflow Variable</xpdl:Description>
                 </xpdl:DataField>
             </xpdl:DataFields>
             <xpdl:Activities>
@@ -2339,6 +2341,8 @@ sim.stephan.user.signature = sim.createSignature(
                     <xpdl:DataType>
                         <xpdl:BasicType Type="INTEGER"/>
                     </xpdl:DataType>
+                    <xpdl:InitialValue>550</xpdl:InitialValue>
+                    <xpdl:Description>Some description of delay parameter.</xpdl:Description>
                 </xpdl:FormalParameter>
             </xpdl:FormalParameters>
             <xpdl:DataFields>
