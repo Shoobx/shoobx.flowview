@@ -5,6 +5,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:template name="layout">
+    <xsl:param name="title" />
     <xsl:param name="contents" />
     <xsl:param name="navigation" />
 
@@ -16,7 +17,9 @@
         <!-- Optional theme -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
 
-        <title>FlowView</title>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+
+        <title>FlowView: <xsl:value-of select="$title" /></title>
 
         <style>
           <xsl:value-of select="document('flowview:flowview.css')/style"
@@ -44,12 +47,17 @@
         </div>
 
         <div class="container">
+          <div class="row">
+            <div class="col-lg-10">
+              <xsl:copy-of select="$contents" />
+            </div>
+            <div class="col-lg-2">
+              <div class="sidenav " data-spy="affix" data-offset-top="0" data-offset-bottom="200">
+                <xsl:copy-of select="$navigation" />
+              </div>
+            </div>
 
-          <div class="sidenav bs-docs-sidebar">
-            <xsl:copy-of select="$navigation" />
           </div>
-
-          <xsl:copy-of select="$contents" />
         </div>
 
         <!-- Latest compiled and minified JavaScript -->

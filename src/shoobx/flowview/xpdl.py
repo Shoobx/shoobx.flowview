@@ -34,5 +34,6 @@ def transform_to_html(xpdl_filename):
     xslt = etree.parse(template, parser)
     transform = etree.XSLT(xslt)
     htmldom = transform(dom)
-    html = etree.tostring(htmldom, pretty_print=True)
+    # html = etree.tostring(htmldom, pretty_print=True)
+    html = str(htmldom)
     return "<!DOCTYPE html>\n" + html
