@@ -158,9 +158,19 @@
   <xsl:template name="activity-link">
     <xsl:param name="target_act_id" />
     <xsl:param name="activities" />
+    <xsl:variable name="activity" select="$activities[@Id=$target_act_id]" />
     <a>
-      <xsl:attribute name="href">#activity-<xsl:value-of select="$target_act_id" /></xsl:attribute>
-      <xsl:value-of select="$activities[@Id=$target_act_id]/@Name" />
+      <xsl:attribute name="href">
+        #activity-<xsl:value-of select="$target_act_id" />
+      </xsl:attribute>
+      <xsl:choose>
+        <xsl:when test="$activity/@Name">
+          <xsl:value-of select="$activity/@Name" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$activity/@Id" />
+        </xsl:otherwise>
+      </xsl:choose>
     </a>
   </xsl:template>
 
