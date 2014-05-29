@@ -12,7 +12,7 @@ def read_file(filename):
 
 setup(
     name="shoobx.flowview",
-    version='0.8.0dev',
+    version='0.8.1dev',
     author="Shoobx, Inc.",
     author_email="dev@shoobx.com",
     description="XPDL Viewer and Browser",
