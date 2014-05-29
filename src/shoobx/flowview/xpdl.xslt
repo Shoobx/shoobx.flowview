@@ -6,6 +6,39 @@
 
   <xsl:output method="html" indent="yes" encoding="UTF-8" />
 
+  <!-- Format formal parameters with their values -->
+  <xsl:template name="actual_parameters">
+    <!-- xpdl:ActualParameter nodeset -->
+    <xsl:param name="actual" />
+    <!-- xpdl:FormalParameter nodeset -->
+    <xsl:param name="formal" />
+
+    <xsl:for-each select="$actual">
+      <xsl:variable name="pos" select="position()" />
+      <xsl:variable name="param_def" select="$formal[$pos]" />
+
+      <div class="row">
+        <div class="col-lg-4">
+          <xsl:call-template name="param_direction">
+            <xsl:with-param name="mode" select="$param_def/@Mode" />
+          </xsl:call-template>
+          <xsl:text> </xsl:text>
+          <tt><xsl:value-of select="$param_def/@Id" /></tt>
+          <p><xsl:value-of select="$param_def/@Name" /></p>
+
+          <xsl:if test="$param_def/xpdl:Description">
+            <p class="description">
+              <xsl:value-of select="$param_def/xpdl:Description" />
+            </p>
+          </xsl:if>
+        </div>
+        <div class="col-lg-8">
+          <pre><xsl:value-of select="." /></pre>
+        </div>
+      </div>
+    </xsl:for-each>
+  </xsl:template>
+
   <!-- Application -->
   <xsl:template name="activity_application">
     <xsl:variable name="app_id" select="xpdl:Implementation/xpdl:Task/xpdl:TaskApplication/@Id" />
@@ -20,31 +53,34 @@
       <p class="description"><xsl:value-of select="$app_def/xpdl:Description" /></p>
 
       <h4>Parameters</h4>
-      <xsl:for-each select="xpdl:Implementation/xpdl:Task/xpdl:TaskApplication/xpdl:ActualParameters/xpdl:ActualParameter">
-        <xsl:variable name="pos" select="position()" />
-        <xsl:variable name="param_def" select="$app_def//xpdl:FormalParameter[$pos]" />
 
-        <div class="row">
-          <div class="col-lg-4">
-            <xsl:call-template name="param_direction">
-              <xsl:with-param name="mode" select="$param_def/@Mode" />
-            </xsl:call-template>
-            <xsl:text> </xsl:text>
-            <tt><xsl:value-of select="$param_def/@Id" /></tt>
-            <p><xsl:value-of select="$param_def/@Name" /></p>
+      <xsl:call-template name="actual_parameters">
+        <xsl:with-param name="actual" select="xpdl:Implementation/xpdl:Task/xpdl:TaskApplication/xpdl:ActualParameters/xpdl:ActualParameter" />
+        <xsl:with-param name="formal" select="$app_def//xpdl:FormalParameter" />
+      </xsl:call-template>
 
-            <xsl:if test="$param_def/xpdl:Description">
-              <p class="description">
-                <xsl:value-of select="$param_def/xpdl:Description" />
-              </p>
-            </xsl:if>
-          </div>
-          <div class="col-lg-8">
-            <pre><xsl:value-of select="." /></pre>
-          </div>
-        </div>
-      </xsl:for-each>
   </xsl:template>
+
+
+  <xsl:template name="activity_subflow">
+    <xsl:variable name="sf_id" select="xpdl:Implementation/xpdl:SubFlow/@Id" />
+    <xsl:variable name="sf_def" select="//xpdl:WorkflowProcess[@Id=$sf_id]" />
+
+      <h4><i class="fa fa-sitemap"></i>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="$sf_def/@Name" />
+        <xsl:text> </xsl:text>
+        <small> <xsl:value-of select="$sf_id" /></small>
+      </h4>
+
+      <h4>Parameters</h4>
+      <xsl:call-template name="actual_parameters">
+        <xsl:with-param name="actual" select="xpdl:Implementation/xpdl:SubFlow/xpdl:ActualParameters/xpdl:ActualParameter" />
+        <xsl:with-param name="formal" select="$sf_def//xpdl:FormalParameter" />
+      </xsl:call-template>
+
+  </xsl:template>
+
 
   <xsl:template name="activity_event">
     <h4>
@@ -141,15 +177,20 @@
     <xsl:call-template name="transitions" />
 
     <div class="activity-info">
-      <xsl:if test="xpdl:Implementation">
-        <xsl:call-template name="activity_application" />
-      </xsl:if>
-      <xsl:if test="xpdl:Event">
-        <xsl:call-template name="activity_event" />
-      </xsl:if>
-      <xsl:if test="xpdl:Route">
-        <xsl:call-template name="activity_route" />
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="xpdl:Implementation/xpdl:Task">
+          <xsl:call-template name="activity_application" />
+        </xsl:when>
+        <xsl:when test="xpdl:Implementation/xpdl:SubFlow">
+          <xsl:call-template name="activity_subflow" />
+        </xsl:when>
+        <xsl:when test="xpdl:Event">
+          <xsl:call-template name="activity_event" />
+        </xsl:when>
+        <xsl:when test="xpdl:Route">
+          <xsl:call-template name="activity_route" />
+        </xsl:when>
+      </xsl:choose>
       <xsl:call-template name="extattrs" />
     </div>
 
