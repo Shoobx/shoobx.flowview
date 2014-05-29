@@ -3352,7 +3352,7 @@ sim.stephan.user.signature = sim.createSignature(
                 <xpdl:ExtendedAttribute Name="sim:simple:title" Value="Sample: Schedule Process"/>
             </xpdl:ExtendedAttributes>
         </xpdl:WorkflowProcess>
-        <xpdl:WorkflowProcess Id="subflow_master" Name="Subflow Master Process">
+        <xpdl:WorkflowProcess AccessLevel="PUBLIC" Id="subflow_master" Name="Subflow Master Process">
             <xpdl:ProcessHeader>
                 <xpdl:Created>2014-05-29 11:33:53</xpdl:Created>
                 <xpdl:Description>This process will invoke subflow</xpdl:Description>
@@ -3391,7 +3391,7 @@ sim.stephan.user.signature = sim.createSignature(
                 <xpdl:Activity Id="subflow_run_ext_subflow" Name="Run External Subflow">
                     <xpdl:Description>This should run subflow from external process</xpdl:Description>
                     <xpdl:Implementation>
-                        <xpdl:SubFlow Id="sample_subflow">
+                        <xpdl:SubFlow Execution="SYNCHR" Id="sample_subflow">
                             <xpdl:ActualParameters>
                                 <xpdl:ActualParameter>var1</xpdl:ActualParameter>
                                 <xpdl:ActualParameter>var2</xpdl:ActualParameter>
@@ -3411,13 +3411,13 @@ sim.stephan.user.signature = sim.createSignature(
                     </xpdl:Event>
                     <xpdl:NodeGraphicsInfos>
                         <xpdl:NodeGraphicsInfo BorderColor="0,0,0" FillColor="236,120,98" Height="31" IsVisible="true" LaneId="samples_pool4_lan1" ToolId="JaWE" Width="31">
-                            <xpdl:Coordinates XCoordinate="515" YCoordinate="60"/>
+                            <xpdl:Coordinates XCoordinate="695" YCoordinate="70"/>
                         </xpdl:NodeGraphicsInfo>
                     </xpdl:NodeGraphicsInfos>
                 </xpdl:Activity>
                 <xpdl:Activity Id="subflow_master_internal_subflow" Name="Run Internal Subflow">
                     <xpdl:Implementation>
-                        <xpdl:SubFlow Id="schedule_message">
+                        <xpdl:SubFlow Execution="SYNCHR" Id="schedule_message">
                             <xpdl:ActualParameters>
                                 <xpdl:ActualParameter>123</xpdl:ActualParameter>
                             </xpdl:ActualParameters>
@@ -3426,6 +3426,24 @@ sim.stephan.user.signature = sim.createSignature(
                     <xpdl:NodeGraphicsInfos>
                         <xpdl:NodeGraphicsInfo BorderColor="0,0,0" FillColor="255,106,106" Height="60" IsVisible="true" LaneId="samples_pool4_lan1" ToolId="JaWE" Width="90">
                             <xpdl:Coordinates XCoordinate="375" YCoordinate="50"/>
+                        </xpdl:NodeGraphicsInfo>
+                    </xpdl:NodeGraphicsInfos>
+                </xpdl:Activity>
+                <xpdl:Activity Id="subflow_master_script" Name="Script Activity">
+                    <xpdl:Implementation>
+                        <xpdl:Task>
+                            <xpdl:TaskScript>
+                                <xpdl:Script ScriptType="application/python">for x in range(20):
+    print "Hello", x</xpdl:Script>
+                            </xpdl:TaskScript>
+                        </xpdl:Task>
+                    </xpdl:Implementation>
+                    <xpdl:Performers>
+                        <xpdl:Performer/>
+                    </xpdl:Performers>
+                    <xpdl:NodeGraphicsInfos>
+                        <xpdl:NodeGraphicsInfo BorderColor="0,0,0" FillColor="255,255,204" Height="60" IsVisible="true" LaneId="samples_pool4_lan1" ToolId="JaWE" Width="90">
+                            <xpdl:Coordinates XCoordinate="545" YCoordinate="50"/>
                         </xpdl:NodeGraphicsInfo>
                     </xpdl:NodeGraphicsInfos>
                 </xpdl:Activity>
@@ -3441,7 +3459,12 @@ sim.stephan.user.signature = sim.createSignature(
                         <xpdl:ConnectorGraphicsInfo FillColor="0,0,0" IsVisible="true" Style="NO_ROUTING_ORTHOGONAL" ToolId="JaWE"/>
                     </xpdl:ConnectorGraphicsInfos>
                 </xpdl:Transition>
-                <xpdl:Transition From="subflow_master_internal_subflow" Id="subflow_master_tra3" To="subflow_master_act3">
+                <xpdl:Transition From="subflow_master_internal_subflow" Id="subflow_master_tra3" To="subflow_master_script">
+                    <xpdl:ConnectorGraphicsInfos>
+                        <xpdl:ConnectorGraphicsInfo FillColor="0,0,0" IsVisible="true" Style="NO_ROUTING_ORTHOGONAL" ToolId="JaWE"/>
+                    </xpdl:ConnectorGraphicsInfos>
+                </xpdl:Transition>
+                <xpdl:Transition From="subflow_master_script" Id="subflow_master_tra4" To="subflow_master_act3">
                     <xpdl:ConnectorGraphicsInfos>
                         <xpdl:ConnectorGraphicsInfo FillColor="0,0,0" IsVisible="true" Style="NO_ROUTING_ORTHOGONAL" ToolId="JaWE"/>
                     </xpdl:ConnectorGraphicsInfos>

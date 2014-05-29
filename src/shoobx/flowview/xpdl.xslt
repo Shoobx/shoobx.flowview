@@ -67,6 +67,21 @@
 
   </xsl:template>
 
+  <xsl:template name="activity_script">
+    <h4>
+      <i class="fa fa-puzzle-piece"></i>
+      <xsl:text> </xsl:text>
+      Script
+      <xsl:text> </xsl:text>
+      <small>
+        <xsl:value-of select=".//xpdl:Script/@ScriptType" />
+      </small>
+    </h4>
+    <pre>
+      <xsl:value-of select=".//xpdl:Script" />
+    </pre>
+  </xsl:template>
+
 
   <xsl:template name="activity_subflow">
     <xsl:variable name="sf_id" select="xpdl:Implementation/xpdl:SubFlow/@Id" />
@@ -184,8 +199,11 @@
 
     <div class="activity-info">
       <xsl:choose>
-        <xsl:when test="xpdl:Implementation/xpdl:Task">
+        <xsl:when test="xpdl:Implementation/xpdl:Task/xpdl:TaskApplication">
           <xsl:call-template name="activity_application" />
+        </xsl:when>
+        <xsl:when test="xpdl:Implementation/xpdl:Task/xpdl:TaskScript">
+          <xsl:call-template name="activity_script" />
         </xsl:when>
         <xsl:when test="xpdl:Implementation/xpdl:SubFlow">
           <xsl:call-template name="activity_subflow" />
