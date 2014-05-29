@@ -12,7 +12,6 @@
   <xsl:variable name="all_processes"
     select="/xpdl:Package/xpdl:WorkflowProcesses | $ext_packages/xpdl:Package/xpdl:WorkflowProcesses" />
 
-
   <!-- Format formal parameters with their values -->
   <xsl:template name="actual_parameters">
     <!-- xpdl:ActualParameter nodeset -->
@@ -49,7 +48,7 @@
   <!-- Application -->
   <xsl:template name="activity_application">
     <xsl:variable name="app_id" select="xpdl:Implementation/xpdl:Task/xpdl:TaskApplication/@Id" />
-    <xsl:variable name="app_def" select="//xpdl:Applications/xpdl:Application[@Id=$app_id]" />
+    <xsl:variable name="app_def" select="/xpdl:Package/xpdl:Applications/xpdl:Application[@Id=$app_id]" />
 
       <h4><i class="fa fa-cube"></i>
         <xsl:text> </xsl:text>
@@ -71,7 +70,7 @@
 
   <xsl:template name="activity_subflow">
     <xsl:variable name="sf_id" select="xpdl:Implementation/xpdl:SubFlow/@Id" />
-    <xsl:variable name="sf_def" select="$all_processes//xpdl:WorkflowProcess[@Id=$sf_id]" />
+    <xsl:variable name="sf_def" select="$all_processes/xpdl:WorkflowProcess[@Id=$sf_id]" />
 
       <h4><i class="fa fa-sitemap"></i>
         <xsl:text> </xsl:text>
