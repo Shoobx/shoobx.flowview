@@ -41,7 +41,7 @@
   display: none
 }
 
-.sidenav .nav li.active ul.nav {
+.sidenav .nav li.active>ul.nav {
   display: block;
 }
 

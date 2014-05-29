@@ -6,6 +6,13 @@
 
   <xsl:output method="html" indent="yes" encoding="UTF-8" />
 
+  <!-- Load external packages -->
+  <xsl:variable name="ext_pkg_hrefs" select="//xpdl:ExternalPackage/@href" />
+  <xsl:variable name="ext_packages" select="document($ext_pkg_hrefs)" />
+  <xsl:variable name="all_processes"
+    select="/xpdl:Package/xpdl:WorkflowProcesses | $ext_packages/xpdl:Package/xpdl:WorkflowProcesses" />
+
+
   <!-- Format formal parameters with their values -->
   <xsl:template name="actual_parameters">
     <!-- xpdl:ActualParameter nodeset -->
@@ -64,7 +71,7 @@
 
   <xsl:template name="activity_subflow">
     <xsl:variable name="sf_id" select="xpdl:Implementation/xpdl:SubFlow/@Id" />
-    <xsl:variable name="sf_def" select="//xpdl:WorkflowProcess[@Id=$sf_id]" />
+    <xsl:variable name="sf_def" select="$all_processes//xpdl:WorkflowProcess[@Id=$sf_id]" />
 
       <h4><i class="fa fa-sitemap"></i>
         <xsl:text> </xsl:text>
@@ -288,7 +295,7 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template name="navigation">
+  <xsl:template name="nav-package">
     <ul class="nav nav-list">
       <xsl:for-each select="//xpdl:WorkflowProcesses/xpdl:WorkflowProcess">
         <li>
@@ -296,7 +303,7 @@
             <xsl:attribute name="href">#process-<xsl:value-of select="@Id" /></xsl:attribute>
             <xsl:value-of select="@Name" />
           </a>
-          <ul class="nav nav-list">
+          <ul class="nav nxav-list">
             <xsl:for-each select="xpdl:Activities/xpdl:Activity">
               <li>
                 <a>
@@ -309,7 +316,41 @@
         </li>
       </xsl:for-each>
     </ul>
+  </xsl:template>
 
+  <xsl:template name="navigation">
+    <ul class="nav nav-list">
+      <li>
+        <a>
+          <xsl:attribute name="href">#package-<xsl:value-of select="@Id" /></xsl:attribute>
+          <xsl:value-of select="//xpdl:Package/@Name" />
+        </a>
+        <xsl:call-template name="nav-package" />
+      </li>
+      <xsl:for-each select="$ext_packages">
+        <li>
+          <a>
+            <xsl:attribute name="href">#package-<xsl:value-of select="xpdl:Package/@Id" /></xsl:attribute>
+            <xsl:value-of select="//xpdl:Package/@Name" />
+          </a>
+          <xsl:call-template name="nav-package" />
+        </li>
+      </xsl:for-each>
+
+    </ul>
+  </xsl:template>
+
+  <xsl:template name="package">
+    <h1>
+      <xsl:attribute name="id">package-<xsl:value-of select="@Id" /></xsl:attribute>
+      <xsl:value-of select="//xpdl:Package/@Name" />
+      <xsl:text> </xsl:text>
+      <small><xsl:value-of select="//xpdl:Package/@Id" /></small>
+    </h1>
+
+    <xsl:for-each select="//xpdl:WorkflowProcesses/xpdl:WorkflowProcess">
+      <xsl:call-template name="process" />
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:include href="flowview:layout.xslt" />
@@ -321,14 +362,10 @@
       </xsl:with-param>
 
       <xsl:with-param name="contents">
+        <xsl:call-template name="package" />
 
-        <h1><xsl:value-of select="//xpdl:Package/@Name" />
-        <xsl:text> </xsl:text>
-        <small><xsl:value-of select="//xpdl:Package/@Id" /></small>
-        </h1>
-
-        <xsl:for-each select="//xpdl:WorkflowProcesses/xpdl:WorkflowProcess">
-          <xsl:call-template name="process" />
+        <xsl:for-each select="$ext_packages/xpdl:Package">
+          <xsl:call-template name="package" />
         </xsl:for-each>
       </xsl:with-param>
 
