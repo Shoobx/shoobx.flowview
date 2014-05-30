@@ -24,6 +24,7 @@
       <xsl:variable name="param_def" select="$formal[$pos]" />
 
       <div class="row">
+        <!-- Parameter name and docs -->
         <div class="col-lg-4">
           <xsl:call-template name="param_direction">
             <xsl:with-param name="mode" select="$param_def/@Mode" />
@@ -38,8 +39,9 @@
             </p>
           </xsl:if>
         </div>
+        <!-- Parameter value (sourece code) -->
         <div class="col-lg-8">
-          <pre><xsl:value-of select="." /></pre>
+          <pre class="source"><xsl:value-of select="." /></pre>
         </div>
       </div>
     </xsl:for-each>
@@ -145,7 +147,7 @@
           <tt><xsl:value-of select="@Name" /></tt>
         </div>
         <div class="col-lg-8">
-          <pre>
+          <pre class="source">
             <xsl:value-of select="." />
             <xsl:value-of select="@Value" />
           </pre>

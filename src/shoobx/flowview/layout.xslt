@@ -63,6 +63,14 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">;</script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">;</script>
+
+        <script src="tags.js">;</script>
+
+        <script type="text/javascript">
+          <xsl:value-of select="document('flowview:flowview.js')/script"
+            disable-output-escaping="yes"/>
+        </script>
+
       </body>
     </html>
 

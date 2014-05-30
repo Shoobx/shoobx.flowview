@@ -49,6 +49,23 @@
   border-left: 2px solid #3c763d;
   font-weight: bold;
   color: #3c763d;
-
 }
+
+a.tag {
+  cursor: pointer;
+}
+
+ul.tags {
+  padding: 0;
+  margin: 0;
+}
+ul.tags li {
+  list-style: none;
+  font-size: 10pt;
+}
+
+.popover {
+  max-width: 500px;
+}
+
 </style>
