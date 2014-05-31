@@ -1,5 +1,8 @@
 <script>
 <![CDATA[
+
+DEFAULT_URL = "http://localhost:8080";
+
 function indexTags(tags) {
     var indexed = {};
     for (var i=0; i<tags.length; i++) {
@@ -15,7 +18,7 @@ function indexTags(tags) {
 }
 
 function tokenize(text) {
-    return text.split(/[^a-zA-Z0-9_]+/);
+    return text.split(/[^a-zA-Z0-9_-]+/);
 }
 
 /* Return sorted unique values of an array
@@ -71,11 +74,13 @@ function makeTagLinkHtml(tag) {
 
 function makeTagPopoverHtml(taginfo) {
     var contents = "";
+    var baseurl = localStorage.baseurl;
     for (var i=0; i<taginfo.items.length; i++) {
         var item = taginfo.items[i];
+        var absurl = baseurl + "/" + item.href;
         contents += "<li>";
         contents += "<i class='fa fa-" + item.icon + "'></i> ";
-        contents += "<a target='flowview' href='" + item.href + "'>";
+        contents += "<a target='flowview' href='" + absurl + "'>";
         contents += item.title + "</a>"
         contents += "</li>";
     }
@@ -111,17 +116,39 @@ function initPopover(e, indexedTags) {
 
     // Format contents
     var taginfo = indexedTags[tag];
-    var contents = makeTagPopoverHtml(taginfo);
 
     $e.popover({
         html: true,
         title: "References for " + tag,
-        content: "<ul class='tags'>" + contents + "</ul>",
         placement: "auto",
-        trigger: "click",
+        trigger: "manual",
         container: "body"
+    }).click(function() {
+        var contents = makeTagPopoverHtml(taginfo);
+        $(this).attr("data-content", "<ul class='tags'>" + contents + "</ul>");
+        $(this).popover('toggle');
+    });
+}
+
+function setupBaseUrl() {
+    var baseUrlInput = $("#baseurl");
+    var setBaseUrl = function(e) {
+        console.log("SETTING");
+        localStorage.baseurl = baseUrlInput.val();
+        e.preventDefault();
+        return false;
+    }
+    baseUrlInput.blur(setBaseUrl);
+    baseUrlInput.closest("form").on("submit", function(e) {
+        // Unfocus base url input (this will set new value)
+        $(".navbar-brand").focus();
+        e.preventDefault()
     });
 
+    if (localStorage.baseurl == undefined) {
+        localStorage.baseurl = DEFAULT_URL;
+    }
+    baseUrlInput.val(localStorage.baseurl);
 }
 
 
@@ -135,10 +162,11 @@ $(function() {
 
     $(".tag").each(function(idx, e) {
         initPopover(e, indexed);
-    })
+    });
+
+    setupBaseUrl();
 
     $('body').on('click', function (e) {
-        console.log("CLICKED");
         $('.tag').each(function () {
 
             //the 'is' for buttons that trigger popups

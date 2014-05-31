@@ -38,11 +38,16 @@
               </button>
               <a class="navbar-brand" href="#">FlowView</a>
             </div>
-            <div class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Processes</a></li>
-              </ul>
-            </div><!--/.nav-collapse -->
+            <div class="navbar-collapse collapse">
+              <form class="navbar-form navbar-right" role="form">
+                <div class="form-group">
+                  <input type="text" id="baseurl" placeholder="App URL" class="form-control baseurl" />
+                </div>
+              </form>
+              <div class="navbar-right">
+                <p class="navbar-text">App URL</p>
+              </div>
+            </div><!--/.navbar-collapse -->
           </div>
         </div>
 

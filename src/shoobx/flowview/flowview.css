@@ -1,4 +1,14 @@
 <style>
+
+#baseurl {
+  width: 300px;
+  background-color: #ccc;
+}
+#baseurl:focus {
+  background-color: white;
+}
+
+
 .description {
   font-style: italic;
 }
