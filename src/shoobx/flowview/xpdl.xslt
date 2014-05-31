@@ -127,10 +127,10 @@
     <h4>
       <xsl:choose>
         <xsl:when test="$gw_type='Parallel'">
-          <i class="fa fa-arrows"></i> Parallel Route
+          <i class="fa fa-code-fork"></i> Parallel Route
         </xsl:when>
         <xsl:when test="$gw_type='Exclusive'">
-          <i class="fa fa-arrows-alt"></i> Exclusive Route
+          <i class="fa fa-code-fork"></i> Exclusive Route
         </xsl:when>
       </xsl:choose>
       <xsl:text> </xsl:text>
