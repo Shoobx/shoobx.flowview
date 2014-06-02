@@ -12,6 +12,13 @@
   <xsl:variable name="all_processes"
     select="/xpdl:Package/xpdl:WorkflowProcesses | $ext_packages/xpdl:Package/xpdl:WorkflowProcesses" />
 
+  <!-- Generic template to display description -->
+  <xsl:template match="xpdl:Description">
+    <p class="description">
+      <xsl:value-of select="." />
+    </p>
+  </xsl:template>
+
   <!-- Format formal parameters with their values -->
   <xsl:template name="actual_parameters">
     <!-- xpdl:ActualParameter nodeset -->
@@ -33,11 +40,7 @@
           <tt><xsl:value-of select="$param_def/@Id" /></tt>
           <p><xsl:value-of select="$param_def/@Name" /></p>
 
-          <xsl:if test="$param_def/xpdl:Description">
-            <p class="description">
-              <xsl:value-of select="$param_def/xpdl:Description" />
-            </p>
-          </xsl:if>
+          <xsl:apply-templates select="$param_def/xpdl:Description" />
         </div>
         <!-- Parameter value (sourece code) -->
         <div class="col-lg-8">
@@ -58,7 +61,7 @@
         <xsl:text> </xsl:text>
         <small> <xsl:value-of select="$app_id" /></small>
       </h4>
-      <p class="description"><xsl:value-of select="$app_def/xpdl:Description" /></p>
+      <xsl:apply-templates select="$app_def/xpdl:Description" />
 
       <h4>Parameters</h4>
 
@@ -310,12 +313,7 @@
           </tt>
 
           <p><xsl:value-of select="@Name" /></p>
-          <xsl:if test="xpdl:Description">
-            <p class="description">
-              <xsl:value-of select="xpdl:Description" />
-            </p>
-          </xsl:if>
-
+          <xsl:apply-templates select="xpdl:Description" />
         </li>
       </xsl:for-each>
     </ul>
@@ -333,11 +331,7 @@
           </tt>
 
           <p><xsl:value-of select="@Name" /></p>
-          <xsl:if test="xpdl:Description">
-            <p class="description">
-              <xsl:value-of select="xpdl:Description" /></p>
-          </xsl:if>
-
+          <xsl:apply-templates select="xpdl:Description" />
         </li>
       </xsl:for-each>
     </ul>
