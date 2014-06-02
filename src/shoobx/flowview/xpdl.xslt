@@ -157,6 +157,10 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- Generate link to an activity
+
+  Available in any context
+   -->
   <xsl:template name="activity-link">
     <xsl:param name="target_act_id" />
     <xsl:param name="activities" />
@@ -176,25 +180,66 @@
     </a>
   </xsl:template>
 
+  <!-- Render transition information
+  -->
+  <xsl:template name="transition" match="xpdl:Transition">
+    <xsl:param name="target_act_id" />
+    <xsl:param name="activities" />
+
+    <xsl:call-template name="activity-link">
+      <xsl:with-param name="target_act_id" select="$target_act_id" />
+      <xsl:with-param name="activities" select="$activities" />
+    </xsl:call-template>
+
+    <xsl:choose>
+      <xsl:when test="xpdl:Condition[@Type='CONDITION']">
+        when <code><xsl:value-of select="xpdl:Condition" /></code>
+      </xsl:when>
+      <xsl:when test="xpdl:Condition[@Type='OTHERWISE']">
+        otherwise
+      </xsl:when>
+    </xsl:choose>
+
+    via
+    <tt><xsl:value-of select="@Id" /></tt>
+
+    <xsl:if test="@Name or xpdl:Description">
+      <p class="description">
+        <xsl:if test="@Name">
+          <b><xsl:value-of select="@Name" />.</b>
+          <xsl:text> </xsl:text>
+        </xsl:if>
+        <xsl:value-of select="xpdl:Description" />
+      </p>
+    </xsl:if>
+
+  </xsl:template>
+
   <xsl:template name="transitions">
     <xsl:variable name="transitions" select="../../xpdl:Transitions/xpdl:Transition" />
     <xsl:variable name="activities" select="../xpdl:Activity" />
     <xsl:variable name="act_id" select="@Id" />
 
+    <ul>
     <xsl:for-each select="$transitions[@To=$act_id]">
-      Previous:
-      <xsl:call-template name="activity-link">
-        <xsl:with-param name="target_act_id" select="@From" />
-        <xsl:with-param name="activities" select="$activities" />
-      </xsl:call-template>
+      <li>
+        Previous:
+        <xsl:call-template name="transition">
+          <xsl:with-param name="target_act_id" select="@From" />
+          <xsl:with-param name="activities" select="$activities" />
+        </xsl:call-template>
+      </li>
     </xsl:for-each>
     <xsl:for-each select="$transitions[@From=$act_id]">
-      Next:
-      <xsl:call-template name="activity-link">
-        <xsl:with-param name="target_act_id" select="@To" />
-        <xsl:with-param name="activities" select="$activities" />
-      </xsl:call-template>
+      <li>
+        Next:
+        <xsl:call-template name="transition">
+          <xsl:with-param name="target_act_id" select="@To" />
+          <xsl:with-param name="activities" select="$activities" />
+        </xsl:call-template>
+      </li>
     </xsl:for-each>
+    </ul>
 
   </xsl:template>
 
