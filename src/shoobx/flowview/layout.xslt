@@ -19,7 +19,7 @@
 
         <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 
-        <title>FlowView: <xsl:value-of select="$title" /></title>
+        <title><xsl:value-of select="$title" /> - FlowView</title>
 
         <style>
           <xsl:value-of select="document('flowview:flowview.css')/style"
