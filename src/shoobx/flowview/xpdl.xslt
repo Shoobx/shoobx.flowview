@@ -223,27 +223,33 @@
     <xsl:variable name="activities" select="../xpdl:Activity" />
     <xsl:variable name="act_id" select="@Id" />
 
-    <ul>
-    <xsl:for-each select="$transitions[@To=$act_id]">
-      <li>
-        Previous:
-        <xsl:call-template name="transition">
-          <xsl:with-param name="target_act_id" select="@From" />
-          <xsl:with-param name="activities" select="$activities" />
-        </xsl:call-template>
-      </li>
-    </xsl:for-each>
-    <xsl:for-each select="$transitions[@From=$act_id]">
-      <li>
-        Next:
-        <xsl:call-template name="transition">
-          <xsl:with-param name="target_act_id" select="@To" />
-          <xsl:with-param name="activities" select="$activities" />
-        </xsl:call-template>
-      </li>
-    </xsl:for-each>
-    </ul>
+    <div class="row">
+      <div class="col-lg-6">
+        <xsl:for-each select="$transitions[@From=$act_id]">
+          <div>
+            <i class="fa fa-long-arrow-right"></i>
+            <xsl:text> </xsl:text>
+            <xsl:call-template name="transition">
+              <xsl:with-param name="target_act_id" select="@To" />
+              <xsl:with-param name="activities" select="$activities" />
+            </xsl:call-template>
+          </div>
+        </xsl:for-each>
+      </div>
+      <div class="col-lg-6">
+        <xsl:for-each select="$transitions[@To=$act_id]">
+          <div>
+            <i class="fa fa-long-arrow-left"></i>
+            <xsl:text> </xsl:text>
+            <xsl:call-template name="transition">
+              <xsl:with-param name="target_act_id" select="@From" />
+              <xsl:with-param name="activities" select="$activities" />
+            </xsl:call-template>
+          </div>
+        </xsl:for-each>
+      </div>
 
+    </div>
   </xsl:template>
 
 
