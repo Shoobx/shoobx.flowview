@@ -10,7 +10,7 @@ import os.path
 from lxml import etree
 
 import shoobx.app
-app_path = os.path.dirname(shoobx.app.__file__).split('src')[0]
+app_path = os.path.dirname(shoobx.app.__file__).rsplit('src', 1)[0]
 
 log = logging.getLogger(__name__)
 
