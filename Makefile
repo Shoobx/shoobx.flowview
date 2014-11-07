@@ -20,5 +20,8 @@ bin/py.test: bin/buildout buildout.cfg setup.py versions.cfg
 test: bin/py.test
 	bin/py.test --cov=src
 
+jenkins-build: bin/py.test
+	bin/py.test --cov=src --cov-report=xml --junit-xml=testresults.xml
+
 clean:
 	rm -rvf bin src/*.egg-info .installed.cfg parts .venv

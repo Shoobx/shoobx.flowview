@@ -8,6 +8,8 @@ bootstrap.py
 coverage
 htmlcov
 tmp/
+testresults.xml
+coverage.xml
 
 *.pyc
 src/*.egg-info
