@@ -5,12 +5,8 @@
 ###############################################################################
 import logging
 import pkg_resources
-import os.path
 
 from lxml import etree
-
-import shoobx.app
-app_path = os.path.dirname(shoobx.app.__file__).rsplit('src', 1)[0]
 
 log = logging.getLogger(__name__)
 
@@ -25,10 +21,7 @@ class ResourceResolver(etree.Resolver):
 
             res = pkg_resources.resource_stream("shoobx.flowview", fn)
             return self.resolve_file(res, context)
-        if url.endswith('.xpdl'):
-            fn = os.path.join(
-                app_path, 'data', 'processes', os.path.split(url)[-1])
-            return self.resolve_file(open(fn, 'r'), context)
+
 
 def transform_to_html(xpdl_filename):
     """Transform given XPDL file to HTML
