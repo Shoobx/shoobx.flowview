@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-0.9.6 (unreleased)
+0.9.6 (2017-01-23)
 ------------------
 
 - Make sure flowview.css is also included.
