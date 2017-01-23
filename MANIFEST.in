@@ -1,2 +1,2 @@
 include *.txt
-recursive-include src *.txt *.py *.dtd *.xml *.xslt *.xpdl *.html *.in *.js
+recursive-include src *.txt *.py *.dtd *.xml *.xslt *.xpdl *.html *.in *.js *.css
