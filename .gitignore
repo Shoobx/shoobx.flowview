@@ -10,6 +10,7 @@ htmlcov
 tmp/
 testresults.xml
 coverage.xml
+dist/
 
 *.pyc
 src/*.egg-info
