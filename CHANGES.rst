@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-0.9.7 (unreleased)
+0.9.7 (2017-05-16)
 ------------------
 
 - Make sure that CHANGES.rst and README.rst are included in release.
