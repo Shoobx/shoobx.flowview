@@ -5,7 +5,7 @@ CHANGES
 0.9.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Make sure that CHANGES.rst and README.rst are included in release.
 
 
 0.9.6 (2017-01-23)
