@@ -32,6 +32,7 @@ def transform_to_html(xpdl_filename):
     template = pkg_resources.resource_stream("shoobx.flowview", "xpdl.xslt")
     dom = etree.parse(xpdl_filename)
     xslt = etree.parse(template, parser)
+    template.close()
     transform = etree.XSLT(xslt)
     htmldom = transform(dom)
     # html = etree.tostring(htmldom, pretty_print=True)
