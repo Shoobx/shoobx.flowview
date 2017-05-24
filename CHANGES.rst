@@ -2,10 +2,14 @@
 CHANGES
 =======
 
-0.9.8 (unreleased)
+1.0.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Move to public repository.
+
+- Use community tools: tox, Travis CI, and Coveralls.io
+
+- Add support for Python 3.5, 3.6, and PyPy.
 
 
 0.9.7 (2017-05-16)
