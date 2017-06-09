@@ -3,6 +3,7 @@
 <xsl:stylesheet version="1.0"
   xmlns:xpdl="http://www.wfmc.org/2008/XPDL2.1" xmlns="http://www.wfmc.org/2008/XPDL2.1"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:param name="process" />
 
   <xsl:output method="html" indent="yes" encoding="UTF-8" />
 
@@ -423,7 +424,9 @@
     </h1>
 
     <xsl:for-each select="//xpdl:WorkflowProcesses/xpdl:WorkflowProcess">
-      <xsl:call-template name="process" />
+      <xsl:if test="$process='' or @Id=$process">
+        <xsl:call-template name="process" />
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
 

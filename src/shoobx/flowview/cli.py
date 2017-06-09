@@ -16,6 +16,9 @@ parser = argparse.ArgumentParser(
     description='Shoobx Flowview: XPDL Viewer')
 parser.add_argument("xpdl", help="Input XPDL filename")
 parser.add_argument("html", help="Output HTML filename")
+parser.add_argument(
+    "--process", default='',
+    help="Limit the output to the given process")
 
 
 def setup_logging(args):
@@ -32,7 +35,7 @@ def main():
     setup_logging(args)
     log.info("Shoobx Flowview %s" % get_version())
 
-    html = xpdl.transform_to_html(args.xpdl)
+    html = xpdl.transform_to_html(args.xpdl, args.process)
 
     with (open(args.html, "w")) as f:
         f.write(html)
