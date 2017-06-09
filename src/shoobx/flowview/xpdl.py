@@ -23,7 +23,7 @@ class ResourceResolver(etree.Resolver):
             return self.resolve_file(res, context)
 
 
-def transform_to_html(xpdl_filename):
+def transform_to_html(xpdl_filename, process=''):
     """Transform given XPDL file to HTML
     """
     parser = etree.XMLParser()
@@ -34,7 +34,7 @@ def transform_to_html(xpdl_filename):
     xslt = etree.parse(template, parser)
     template.close()
     transform = etree.XSLT(xslt)
-    htmldom = transform(dom)
+    htmldom = transform(dom, process='"{}"'.format(process))
     # html = etree.tostring(htmldom, pretty_print=True)
     html = str(htmldom)
     return "<!DOCTYPE html>\n" + html
