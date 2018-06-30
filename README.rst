@@ -13,4 +13,8 @@ Shoobx Flowview
 .. image:: https://img.shields.io/pypi/pyversions/shoobx.flowview.svg
     :target: https://pypi.python.org/pypi/shoobx.flowview/
 
+.. image:: https://api.codeclimate.com/v1/badges/fb9f61efcea6e3f65162/maintainability
+   :target: https://codeclimate.com/github/Shoobx/shoobx.flowview/maintainability
+   :alt: Maintainability
+
 XPDL File viewer and browser
